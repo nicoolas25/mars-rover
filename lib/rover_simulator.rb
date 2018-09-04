@@ -1,8 +1,11 @@
+require "world"
+
 class RoverSimulator
 
-  def initialize(orientation: "N")
+  def initialize(orientation: "N", world: World::Sphere.new)
     @orientation = orientation
-    @position = "000000"
+    @world = world
+    @position = world.random_position
   end
 
   def greeting
@@ -29,11 +32,11 @@ class RoverSimulator
   private
 
   def move_forward
-    @position = @position.succ
+    @position = @world.next(from: @position, direction: @orientation)
   end
 
   def move_backward
-    @position = @position.succ
+    @position = @world.next(from: @position, direction: opposite_orientation)
   end
 
   def rotate_left
@@ -54,6 +57,15 @@ class RoverSimulator
       when 'S' then 'W'
       when 'W' then 'N'
       end
+  end
+
+  def opposite_orientation
+    case @orientation
+    when 'N' then 'S'
+    when 'E' then 'W'
+    when 'S' then 'N'
+    when 'W' then 'E'
+    end
   end
 
 end

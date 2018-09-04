@@ -110,6 +110,25 @@ RSpec.describe RoverSimulator do
         expect(orientation).to eq "N"
       end
     end
+
+    describe "the way position works" do
+      [
+        "fffrfffrfffrfff\n",
+        "ffflffflffflfff\n",
+        "bbblbbblbbblbbb\n",
+        "bbbrbbbrbbbrbbb\n",
+      ].each do |square_command|
+        context "when doing a square" do
+          let(:command_line) { square_command }
+
+          it "comes back its original position" do
+            receive
+            _, position, _ = components(instance.answer)
+            expect(position).to eq initial_position
+          end
+        end
+      end
+    end
   end
 
   def components(answer)

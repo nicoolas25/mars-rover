@@ -43,6 +43,17 @@ RSpec.describe RoverServer do
         end
       end
     end
+
+    it "listens even when the client closed the connection" do
+      start
+
+      2.times do
+        expect_a_listening_tcp_server do |client_socket|
+          client_socket.gets
+          client_socket.close
+        end
+      end
+    end
   end
 
   def expect_a_listening_tcp_server(&block)

@@ -16,15 +16,15 @@ class RoverServer
 
     @thread = Thread.new do
       tcp_server = TCPServer.new(LOCALHOST, @port)
-      @client_socket = tcp_server.accept
+      while @client_socket = tcp_server.accept
+        # First message
+        @client_socket.print @rover.greeting
 
-      # First message
-      @client_socket.print @rover.greeting
-
-      # Command / answer loop
-      while (command_line = @client_socket.gets)
-        @rover.receive(command_line)
-        @client_socket.print @rover.answer
+        # Command / answer loop
+        while (command_line = @client_socket.gets)
+          @rover.receive(command_line)
+          @client_socket.print @rover.answer
+        end
       end
     end
   end

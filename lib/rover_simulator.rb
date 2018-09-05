@@ -18,13 +18,17 @@ class RoverSimulator
 
   def receive(command_line)
     @applied_commands = command_line.chomp.each_char.with_object("") do |char, memo|
-      case char
-      when 'f' then move_forward
-      when 'b' then move_backward
-      when 'l' then rotate_left
-      when 'r' then rotate_right
-      else raise "Unsupported #{char}"
-      end
+      command_succeeded =
+        case char
+        when 'f' then move_forward
+        when 'b' then move_backward
+        when 'l' then rotate_left
+        when 'r' then rotate_right
+        else raise "Unsupported #{char}"
+        end
+
+      break unless command_succeeded
+
       memo << char
     end
   end

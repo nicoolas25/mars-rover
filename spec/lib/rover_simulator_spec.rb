@@ -1,7 +1,8 @@
+require "fakes/fake_world"
 require "rover_simulator"
 
 RSpec.describe RoverSimulator do
-  let(:instance) { described_class.new }
+  let(:instance) { described_class.new(world: FakeWorld.new) }
 
   describe "#greeting" do
     subject(:greeting) { instance.greeting }
@@ -118,7 +119,7 @@ RSpec.describe RoverSimulator do
         "bbblbbblbbblbbb\n",
         "bbbrbbbrbbbrbbb\n",
       ].each do |square_command|
-        context "when doing a square" do
+        context "when doing a square pattern: #{square_command.chomp}" do
           let(:command_line) { square_command }
 
           it "comes back its original position" do

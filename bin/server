@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift("lib") unless $LOAD_PATH.include?("lib")
+
+require "rover_server"
+
+port = ENV["PORT"] || 3005
+
+server = RoverServer.new(port: port)
+
+puts "Starting rover server on port #{port}..."
+server.start
+
+loop { sleep 3 }

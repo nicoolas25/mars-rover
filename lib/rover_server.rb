@@ -1,8 +1,9 @@
+require "pry"
 require "rover_simulator"
 
 class RoverServer
 
-  LOCALHOST = "127.0.0.1".freeze
+  LOCALHOST = "0.0.0.0".freeze
 
   def initialize(port:, rover: RoverSimulator.new)
     @port = port
@@ -22,7 +23,9 @@ class RoverServer
 
         # Command / answer loop
         while (command_line = @client_socket.gets)
+          print command_line
           @rover.receive(command_line)
+          print @rover.answer
           @client_socket.print @rover.answer
         end
       end
